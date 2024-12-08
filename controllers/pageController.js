@@ -43,7 +43,7 @@ export const createPage = async (req, res) => {
 export const editPage = async (req, res) => {
   try {
     const { slug } = req.params;
-    const { title, links } = req.body;
+    const { title, links, newSlug } = req.body;
     const userId = req.user.id;
 
     // Validate input
@@ -68,12 +68,12 @@ export const editPage = async (req, res) => {
     page.links = links;
 
     // If the slug is being changed, ensure it's unique
-    if (req.body.newSlug && req.body.newSlug !== page.slug) {
-      const existingPage = await Page.findOne({ slug: req.body.slug });
+    if (newSlug && newSlug !== slug) {
+      const existingPage = await Page.findOne({ slug: newSlug });
       if (existingPage) {
         return res.status(400).json({ error: "Slug is already in use." });
       }
-      page.slug = req.body.newSlug;
+      page.slug = newSlug;
     }
 
     // Save the updated page
