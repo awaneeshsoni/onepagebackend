@@ -9,7 +9,7 @@ dotenv.config();
 
 const app = express();
 const corsOptions = {
-  origin: ['https://inonepage.vercel.app/', 'http://localhost:5173'],  // Replace with your actual frontend URL
+  origin: ['https://inonepage.vercel.app', 'http://localhost:5173'],  // Replace with your actual frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: "Content-Type",
 };
