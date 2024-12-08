@@ -8,8 +8,12 @@ import pageRoutes from "./routes/pageRoutes.js"
 dotenv.config();
 
 const app = express();
-
-app.use(cors())
+const corsOptions = {
+  origin: ['https://inonepage.vercel.app/', 'http://localhost:5173'],  // Replace with your actual frontend URL
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type",
+};
+app.use(cors(corsOptions));
 app.use(express.json())
 
 app.use('/api/auth',authRoutes )
