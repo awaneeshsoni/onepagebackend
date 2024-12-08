@@ -11,7 +11,7 @@ const app = express();
 const corsOptions = {
   origin: ['https://inonepage.vercel.app', 'http://localhost:5173'],  // Replace with your actual frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: "Content-Type",
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use(cors(corsOptions));
 app.use(express.json())
