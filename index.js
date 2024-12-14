@@ -5,6 +5,7 @@ import dotenv from "dotenv"
 import authRoutes from "./routes/authRoutes.js"
 import linkRoutes from "./routes/linkRoutes.js"
 import pageRoutes from "./routes/pageRoutes.js"
+import messageRoutes from "./routes/messageRoutes.js"
 dotenv.config();
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.json())
 app.use('/api/auth',authRoutes )
 app.use('/api/links',linkRoutes )
 app.use('/api/pages', pageRoutes )
+app.use('/api/messages', messageRoutes )
 
 app.get('/', (req,res)=>{
     res.status(200).send("All good")

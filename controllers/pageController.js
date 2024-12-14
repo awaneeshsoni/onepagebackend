@@ -4,7 +4,7 @@ import Page from "../models/Page.js";
 // Create a new page
 export const createPage = async (req, res) => {
   try {
-    const { title, slug, links } = req.body;
+    const { title,description, slug, links, allowAnonymousMessages} = req.body;
     const userId = req.user.id; // Provided by authMiddleware
 
     // Validate input
@@ -27,9 +27,11 @@ export const createPage = async (req, res) => {
     // Create the page
     const newPage = new Page({
       title,
+      description,
       slug,
       links,
-      user: userId
+      user: userId,
+      allowAnonymousMessages
     });
     await newPage.save();
 
@@ -43,7 +45,7 @@ export const createPage = async (req, res) => {
 export const editPage = async (req, res) => {
   try {
     const { slug } = req.params;
-    const { title, links, newSlug } = req.body;
+    const { title, description, links, newSlug, allowAnonymousMessages } = req.body;
     const userId = req.user.id;
 
     // Validate input
@@ -65,7 +67,9 @@ export const editPage = async (req, res) => {
 
     // Update page data
     page.title = title;
+    page.description = description;
     page.links = links;
+    page.allowAnonymousMessages = allowAnonymousMessages;
 
     // If the slug is being changed, ensure it's unique
     if (newSlug && newSlug !== slug) {
@@ -91,7 +95,6 @@ export async function getUserPages(req, res) {
   try {
     const pages = await Page.find({ user: req.user.id }).populate("links");
     if (!pages) return res.status(404).json({ message: "Page not found" });
-
     res.status(200).json(pages);
   } catch (error) {
     res.status(500).json({ message: "Error fetching page", error });
